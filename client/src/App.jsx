@@ -20,6 +20,7 @@ function App() {
           <div className="formulario-login">
           <p>Este é o conteúdo principal do aplicativo.</p>
           </div>
+          <p>© 2026 CPS | Desenvolvimento: ETEC da Zona Leste</p>
         </main>
       </div>
     </div>
