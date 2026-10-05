@@ -1,27 +1,23 @@
 import './App.css';
+import { BarraLateral } from './components/BarraLateral/BarraLateral';
+import { FormularioLogin } from './components/FormularioLogin/FormularioLogin';
 
 function App() {
   return (
-    <div className="container-geral">
-      {/* Barra Lateral */}
-      <nav className="menu-lateral">
-        <h2>Menu</h2>
-        <h3>Login</h3>
-        <h3>Sobre</h3>
-        <h3>Contato</h3>
-      </nav>
-
-      {/* Lado Direito da Tela */}
-      <div className="conteudo-principal">
+    <div className="body-container">
+      <BarraLateral />
+      <div className="menu-container">
         <header>
+          <h1>Bem-vindo ao Aplicativo</h1>
         </header>
-        
-        <main className="corpo-conteudo">
-          <div className="formulario-login">
+
+        <main className="conteudo">
+          <FormularioLogin />
           <p>Este é o conteúdo principal do aplicativo.</p>
-          </div>
-          <p>© 2026 CPS | Desenvolvimento: ETEC da Zona Leste</p>
         </main>
+        <footer>
+          <p>© 2026 CPS | Desenvolvimento: ETEC da Zona Leste</p>
+        </footer>
       </div>
     </div>
   );

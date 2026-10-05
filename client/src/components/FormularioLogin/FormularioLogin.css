@@ -1,0 +1,11 @@
+.formulario-login {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 64px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  border-right: 1px solid #ccc;
+}
