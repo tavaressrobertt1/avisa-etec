@@ -10,6 +10,8 @@
 
 /* Corpo de conteúdo */
 .conteudo {
+  display: flex;
+  flex-direction: column;
   background-color: rgb(107, 86, 86);
   color: white;
   flex: 1;

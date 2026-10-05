@@ -2,7 +2,7 @@ import './BarraLateral.css';
 
 export function BarraLateral() {
   return (
-    <nav className="menu-lateral">
+    <nav className="BarraLateral">
       <h2>Menu</h2>
       <h3>Login</h3>
       <h3>Sobre</h3>

@@ -1,8 +1,8 @@
 import './FormularioLogin.css';
 
-function FormularioLogin() {
+export function FormularioLogin() {
   return (
-    <div className="formulario-login">
+    <div className="FormularioLogin">
       <h2>Login</h2>
       <form>
         <label htmlFor="email">Email:</label>
@@ -14,5 +14,3 @@ function FormularioLogin() {
     </div>
   );
 }
-
-export { FormularioLogin };

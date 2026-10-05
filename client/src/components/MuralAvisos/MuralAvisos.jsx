@@ -2,7 +2,7 @@ import './MuralAvisos.css';
 
 export function MuralAvisos() {
     return (
-        <div className="mural-avisos">
+        <div className="MuralAvisos">
             <h2>Mural de Avisos</h2>
             <div className="aviso">
                 <h3>Aviso 1</h3>
