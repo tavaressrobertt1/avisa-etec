@@ -1,12 +1,304 @@
-.BarraLateral{
-  background:linear-gradient(#e6e2e2, #a13f3f);
-  color: white;
-  border-right: 1px solid #ccc;
-  padding: 20px;
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  width: 250px;
-  height: 100vh;
-  box-sizing: border-box;
+/* ==========================================================================
+   1. VARIÁVEIS GLOBAIS (:root)
+   Define a paleta de cores e sombras base (Modo Claro) usada em todo o componente.
+   ========================================================================== */
+:root {
+    --page: #e8ecf1;         /* Cor de fundo geral da página */
+    --surface: #ffffff;      /* Cor de fundo da barra lateral (superfície) */
+    --text: #3d434b;         /* Cor principal dos textos */
+    --soft: #6e747d;         /* Cor secundária/suave para ícones e textos apagados */
+    --muted: #a8adb5;        /* Cor cinza clara para detalhes menos importantes */
+    --border: #eef0f3;       /* Cor das bordas e linhas divisorias */
+    --chip: #f4f5f7;         /* Cor de fundo para botões secundários */
+    --accent: #007aff;       /* Cor de destaque (Azul principal do sistema) */
+    --active: rgb(0 122 255 / 10%); /* Cor de fundo translúcida para o item ativo do menu */
+    --shadow: 0 24px 60px rgb(31 41 55 / 12%); /* Sombra flutuante da barra lateral */
+}
+
+/* ==========================================================================
+   2. MODO ESCURO (Dark Mode)
+   Substitui as variáveis globais por tons escuros quando a classe .dark-mode 
+   é adicionada ao <body> pelo React.
+   ========================================================================== */
+body.dark-mode {
+    --page: #121212;
+    --surface: #1e1e1e;
+    --text: #e0e0e0;
+    --soft: #a0a0a0;
+    --muted: #666666;
+    --border: #2c2c2c;
+    --chip: #2a2a2a;
+    --shadow: 0 24px 60px rgb(0 0 0 / 50%);
+}
+
+/* ==========================================================================
+   3. ESTILOS GERAIS DA PÁGINA
+   ========================================================================== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--page);
+    transition: background-color 0.3s ease; /* Transição suave ao trocar de tema */
+}
+
+/* ==========================================================================
+   4. CONFIGURAÇÃO DOS ÍCONES
+   Padroniza o tamanho e o traço dos ícones vindos da biblioteca Lucide.
+   ========================================================================== */
+.icon {
+    flex: 0 0 auto;
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;       /* Usa a cor do texto do elemento pai */
+    stroke-width: 1.75;         /* Grossura da linha do ícone */
+    stroke-linecap: round;      /* Arredonda as pontas das linhas */
+    stroke-linejoin: round;     /* Arredonda as junções dos traços */
+}
+
+/* ==========================================================================
+   5. BARRA LATERAL (Sidebar)
+   Define o comportamento fixo, o formato flutuante e a animação de expansão.
+   ========================================================================== */
+.sidebar {
+    position: fixed;            /* Mantém a barra fixa no ecrã independentemente do scroll */
+    top: 24px;
+    left: 24px;
+    bottom: 32px;
+    overflow: hidden;           /* Esconde qualquer conteúdo que ultrapasse os limites */
+    display: flex;
+    flex-direction: column;     /* Organiza os filhos verticalmente */
+    gap: 16px;                  /* Espaçamento uniforme entre os blocos internos */
+    width: 84px;                /* Largura inicial compacta da barra */
+    padding: 20px;
+    border-radius: 24px;        /* Bordas bem arredondadas (estilo moderno) */
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    white-space: nowrap;        /* Impede que o texto quebre linha incorretamente */
+    transition: width 0.35s ease, background-color 0.3s ease; /* Animação fluida de largura e cor */
+    box-sizing: border-box;
+    z-index: 100;               /* Garante que fique acima de outros elementos da página */
+}
+
+/* Quando o React adiciona a classe .expanded (ao passar o rato), a largura aumenta */
+.sidebar.expanded {
+    width: 264px;
+}
+
+/* O ícone de seta (chevron) começa invisível */
+.chevron {
+    width: 20px;
+    height: 20px;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+/* Quando expandido, revela os detalhes do perfil e a seta suavemente */
+.sidebar.expanded :is(.details, .chevron) {
+    opacity: 1;
+    transition: opacity 0.25s 0.1s;
+}
+
+/* Quando expandido, a barra de pesquisa ganha largura total */
+.sidebar.expanded .search {
+    width: 100%;
+}
+
+/* ==========================================================================
+   6. SECÇÃO DE PERFIL
+   ========================================================================== */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;         /* Deixa a imagem redonda */
+    object-fit: cover;
+}
+
+.details .name {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.details .role {
+    margin: 0;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* ==========================================================================
+   7. CAMPO DE BUSCA
+   ========================================================================== */
+.search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 0 0 44px;
+    width: 44px;                /* Começa quadrado e compacto */
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: width 0.35s ease;
+}
+
+.search input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    font-size: 14px;
+    padding: 0 44px 0 14px;
+    opacity: 0;                 /* O texto e input começam ocultos */
+    transition: opacity 0.15s;
+    color: var(--text);
+}
+
+/* Revela o input de texto ao expandir a barra */
+.sidebar.expanded .search input {
+    opacity: 1;
+    transition: opacity 0.25s 0.1s;
+}
+
+.search input::placeholder {
+    color: var(--muted);
+}
+
+.search input:focus {
+    outline: 0;                 /* Remove a borda padrão feia do navegador ao clicar */
+}
+
+.search > .icon {
+    position: absolute;
+    right: 11px;
+    top: 50%;
+    transform: translateY(-50%);    /* Centraliza o ícone de lupa perfeitamente na vertical */
+    color: var(--muted);
+    pointer-events: none;       /* Impede que o ícone interfira no clique do input */
+}
+
+/* ==========================================================================
+   8. MENU DE NAVEGAÇÃO
+   ========================================================================== */
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 56px;
+    color: var(--soft);
+    cursor: pointer;
+    transition: color 0.2s;
+    border-radius: 12px;
+}
+
+/* Cria um fundo animado atrás do item do menu usando ::before */
+.item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;                /* Tamanho inicial correspondente ao modo compacto */
+    height: 44px;
+    border-radius: 12px;
+    transition: width 0.35s ease, height 0.35s ease, background-color 0.2s;
+    z-index: -1;                /* Fica atrás do texto e ícone */
+}
+
+/* Quando expandido, o fundo do item ocupa toda a largura da barra */
+.sidebar.expanded .item::before {
+    width: 100%;
+    height: 56px;
+}
+
+.item > .icon {
+    margin: 0 11px;
+}
+
+.item p {
+    margin: 0;
+    font-size: 15px;
+    opacity: 0;                 /* Texto do menu começa oculto */
+    transition: opacity 0.15s;
+}
+
+/* Revela o texto do menu ao expandir a barra */
+.sidebar.expanded .item p {
+    opacity: 1;
+    transition: opacity 0.25s 0.1s;
+}
+
+.item:hover {
+    color: var(--accent);       /* Muda a cor do texto ao passar o rato por cima */
+}
+
+/* Estado Ativo (gerido pelo React quando a aba é selecionada) */
+.item.active {
+    color: var(--accent);
+}
+
+.item.active::before {
+    background: var(--active);  /* Aplica o fundo translúcido azulado na aba ativa */
+}
+
+hr {
+    height: 1px;
+    margin: 12px 0;
+    border: 0;
+    background: var(--border);  /* Linha divisória subtil */
+}
+
+/* ==========================================================================
+   9. AÇÕES E BOTÃO DE TEMA (Rodapé)
+   ========================================================================== */
+.actions {
+    position: relative;
+    flex-shrink: 0;
+    height: 60px;
+    margin-top: auto;           /* Empurra a secção de ações sempre para o fundo da barra */
+}
+
+.action {
+    position: absolute;
+    left: 0;
+    display: grid;
+    place-items: center;        /* Centraliza o ícone dentro do botão */
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--chip);
+    color: var(--soft);
+    cursor: pointer;
+}
+
+/* Lógica de alternância de ícones do sol/lua baseada no tema atual */
+.action .sun {
+    display: none;              /* No modo claro, esconde o sol e mostra a lua */
+}
+
+body.dark-mode .action .moon {
+    display: none;              /* No modo escuro, esconde a lua e mostra o sol */
+}
+
+body.dark-mode .action .sun {
+    display: block;
 }

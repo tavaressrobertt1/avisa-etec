@@ -1,26 +1,19 @@
-/* Container principal que alinha o menu e o conteúdo lado a lado */
-.body-container {
-  display: flex;
-  flex-direction: row;
+.app-shell {
   min-height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(rgb(105, 105, 105), rgb(240, 240, 240));
 }
 
-
-/* Corpo de conteúdo */
-.conteudo {
+main {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  background-color: rgb(107, 86, 86);
-  color: white;
-  flex: 1;
-  padding: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Container que engloba o Header e o Corpo à direita do menu */
-.menu-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+footer {
+  display: none;
 }

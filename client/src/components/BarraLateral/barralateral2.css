@@ -1,0 +1,12 @@
+.BarraLateral{
+  background:linear-gradient(#e6e2e2, #a13f3f);
+  color: white;
+  border-right: 1px solid #ccc;
+  padding: 20px;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 100vh;
+  box-sizing: border-box;
+}

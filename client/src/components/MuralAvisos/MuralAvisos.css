@@ -1,4 +1,4 @@
-.MuralAvisos{
+.MuralAvisos {
   background-color: rgb(66, 39, 39);
   border-right: 1px solid #000000;
   display: flex;
@@ -8,4 +8,14 @@
   color: white;
   padding: 20px;
   box-sizing: border-box;
-} 
+}
+
+.MuralAvisos h2,
+.MuralAvisos h3,
+.MuralAvisos p {
+  margin-top: 0;
+}
+
+.MuralAvisos .aviso {
+  margin-bottom: 16px;
+}
